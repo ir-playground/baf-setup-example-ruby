@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Invisirisk startup script..."
+      -  # invisirisk startup script
+      - curl $API_URL/pse/bitbucket-setup/pse_startup | bash
+      - . /etc/profile.d/pse-proxy.sh
+      
+
+  build:
+    commands:
+      - echo "Docker build with proxy settings..."
+      - docker build -t ruby --build-arg ir_proxy=http://${PROXY_IP}:3128 .
+
+  post_build:
+    commands:
+      - echo "Build complete!"
+      - gem list
+      - bash /tmp/pse_cleanup/cleanup.sh
