@@ -86,8 +86,6 @@ The following environment variables must be set in the CodeBuild project:
 
 ## Appendix: What Changed in the `docker build` Command
 
-If you need to understand what was added to the `docker build` command, or apply the same changes in a different CI environment, here is the before/after:
-
 **Before:**
 ```sh
 docker build -t $IMAGE_NAME:$TAG .
