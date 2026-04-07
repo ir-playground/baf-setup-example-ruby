@@ -37,24 +37,6 @@ RUN apt update && apt upgrade -y && apt install -y --no-install-recommends \
 # Install application gems
 COPY . .
 
-## Invisirisk setup
-
-ARG ir_proxy
-
-ENV http_proxy=${ir_proxy} \
-    https_proxy=${ir_proxy} \
-    HTTP_PROXY=${ir_proxy} \
-    HTTPS_PROXY=${ir_proxy}
-
-RUN if [ -n "${ir_proxy}" ]; then \
-      echo "Value of https_proxy: ${https_proxy}" && \
-      curl -L -k -s -o /tmp/pse.crt https://pse.invisirisk.com/ca && \
-      cp /tmp/pse.crt /usr/local/share/ca-certificates/pse.crt && \
-      echo "CA certificate successfully retrieved and copied to /usr/local/share/ca-certificates/" && \
-      update-ca-certificates; \
-    fi
-
-
 RUN gem install bundler -v 2.4.22
 # RUN bundle config https://gem.fury.io/engineerai nvHuX-0XxLY20piQkFVfgnYgd4CszdA
 RUN bundle config build.nokogiri --use-system-libraries \
